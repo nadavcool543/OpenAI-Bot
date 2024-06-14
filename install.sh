@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 
 # Prompt the user for their OpenAI API key
 read -p "Please enter your OpenAI API key: " openai_api_key
