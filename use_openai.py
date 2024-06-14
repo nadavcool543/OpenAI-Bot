@@ -63,7 +63,7 @@ while True:
     if "hosts:" in assistant_message:
         # Ask the user if they want to save it as an ansible playbook
         execute = input(PROMPT_COLOR + "Do you want to make an ansible playbook out of it? (yes/no):" + RESET_COLOR + " ")
-        if execute.lower() == "yes":
+        if execute == "yes":
             # Add the result to a new script file
             escaped_message = assistant_message.replace('"', '\\"').replace('$', '\\$')
             subprocess.run(f'echo "{escaped_message}" > play.yml', shell=True)
