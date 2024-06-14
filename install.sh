@@ -16,7 +16,7 @@ echo "export OPENAI_API_KEY=${openai_api_key}" >> ${home_dir}/.bashrc
 
 # Append the alias to .bashrc
 echo "Updating .bashrc with alias for gpt..."
-echo "alias gpt='python3 ${home_dir}/use_openai.py'" >> ${home_dir}/.bashrc
+echo "alias gpt='python3 ${home_dir}/OpenAI-Bot/use_openai.py'" >> ${home_dir}/.bashrc
 
 # Source the .bashrc file to apply changes
 echo "Reloading .bashrc..."
