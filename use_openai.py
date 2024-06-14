@@ -46,7 +46,7 @@ while True:
     # Check if the assistant's message looks like a command
     if "bash -c" in assistant_message:
         # Ask the user if they want to execute the content
-        execute = input(PROMPT_COLOR + "Do you want to execute this content? (yes/no):" + RESET_COLOR + " ")
+        execute = input(PROMPT_COLOR + "Do you want to execute this command? (yes/no):" + RESET_COLOR + " ")
         if execute.lower() == "yes":
             # Execute the content
             subprocess.run(assistant_message, shell=True)
