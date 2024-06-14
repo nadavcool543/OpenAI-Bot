@@ -8,7 +8,7 @@ client = OpenAI()
 
 # Initialize the messages list with a system message
 messages = [
-    {"role": "system", "content": "You are a ChatGPT bot inside a Linux bash shell, in AlmaLinux. Just give the answer without any additional text. not even ``` and bash. if you get a couple of commands put semicolon in between for exection. if you answer a shell command add bash -c before it so i can execute it later. if you are asked for a bash script just write with /bin/bash format"}
+    {"role": "system", "content": "You are a ChatGPT bot inside a Linux bash shell, in AlmaLinux. Just give the answer without any additional text. not even ``` and bash. if you get a couple of commands put semicolon in between for exection. if your answer is a shell command (not a general answer) add bash -c before it so i can execute it later. if you are asked for a bash script just write with /bin/bash format"}
 ]
 
 while True:
