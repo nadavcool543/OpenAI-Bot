@@ -10,19 +10,22 @@ RESET_COLOR = "\033[0m"
 
 print(PROMPT_COLOR + "Welcome to Nadav's ChatGPT Bot. When you need to stop just write stop." + RESET_COLOR)
 
+def get_username():
+    return os.environ.get('USER') or os.environ.get('USERNAME') or 'unknown_user'
+
 system_info = {
     'os': platform.system(),
     'os_version': platform.version(),
     'machine': platform.machine(),
     'processor': platform.processor(),
     'python_version': platform.python_version(),
-    'user': os.getlogin(),
+    'user': get_username(),
     'home_directory': os.path.expanduser("~")
 }
 
 filesystem_info = {
     'disk_usage': shutil.disk_usage("/"),
-    'home_directory_contents': os.listdir(os.path.expanduser("~")),
+    'home_directory_contents': [f for f in os.listdir(os.path.expanduser("~")) if not f.startswith('.')],
     'current_directory': os.getcwd(),
     'filesystem_structure': {}
 }
@@ -31,8 +34,8 @@ for root, dirs, files in os.walk(os.path.expanduser("~"), topdown=True):
     level = root.replace(os.path.expanduser("~"), "").count(os.sep)
     if level < 2:
         filesystem_info['filesystem_structure'][root] = {
-            'dirs': dirs,
-            'files': files
+            'dirs': [d for d in dirs if not d.startswith('.')],
+            'files': [f for f in files if not f.startswith('.')]
         }
 
 disk_usage = filesystem_info['disk_usage']
@@ -90,19 +93,19 @@ while True:
 
     if "bash -c" in assistant_message:
         execute = input(PROMPT_COLOR + "Do you want to execute this command? (yes/no):" + RESET_COLOR + " ")
-        if execute == "yes":
-            subprocess.run(assistant_message, shell=True)
+        if execute.lower() == "yes":
+            subprocess.run(assistant_message.split('bash -c ')[1], shell=True)
 
     if "/bin/bash" in assistant_message:
         execute = input(PROMPT_COLOR + "Do you want to make a bash script out of it? (yes/no):" + RESET_COLOR + " ")
-        if execute == "yes":
+        if execute.lower() == "yes":
             escaped_message = assistant_message.replace('"', '\\"').replace('$', '\\$')
             subprocess.run(f'echo "{escaped_message}" > ai.sh', shell=True)
             print(ANSWER_COLOR + "The script has been written to 'ai.sh'." + RESET_COLOR)
 
     if "hosts:" in assistant_message:
         execute = input(PROMPT_COLOR + "Do you want to make an ansible playbook out of it? (yes/no):" + RESET_COLOR + " ")
-        if execute == "yes":
+        if execute.lower() == "yes":
             escaped_message = assistant_message.replace('"', '\\"').replace('$', '\\$')
             subprocess.run(f'echo "{escaped_message}" > play.yml', shell=True)
-            print(ANSWER_COLOR + "The script has been written to 'play.yml'." + RESET_COLOR)
+            print(ANSWER_COLOR + "The playbook has been written to 'play.yml'." + RESET_COLOR)
