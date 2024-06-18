@@ -4,6 +4,8 @@ import platform
 import shutil
 import subprocess
 
+export OPENAI_API_KEY=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
+
 PROMPT_COLOR = "\033[1;36m"
 ANSWER_COLOR = "\033[1;32m"
 RESET_COLOR = "\033[0m"
