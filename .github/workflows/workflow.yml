@@ -1,0 +1,22 @@
+name: Syntax Check
+
+on: [push, pull_request]
+
+jobs: 
+  lint: 
+    runs-on: ubuntu-latest
+    container: python:3.9-slim
+
+    steps: 
+    - name: Checkout Code
+      uses: actions/checkout@v3
+   
+    - name: set up Python and flake8 syntax tool
+      run: |
+         pip install --upgrade pip
+         pip install -r requirements.txt
+         pip install flake8
+
+    - name: Run flake8
+      run: flake8 .
+       
